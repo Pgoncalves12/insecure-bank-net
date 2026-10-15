@@ -17,14 +17,16 @@ namespace insecure_bank_net.Dao
 
         public List<Account> FindUsersByUsernameAndPassword(string username, string password)
         {
-            var str = "select * from account where username='" + username + "' AND password='" + password + "'";
-            return dbContext.Account.FromSqlRaw(str).ToList();
+            return dbContext.Account
+                .FromSqlInterpolated($"select * from account where username={username} AND password={password}")
+                .ToList();
         }
 
         public List<Account> FindUsersByUsername(string username)
         {
-            var str = "select * from account where username='" + username + "'";
-            return dbContext.Account.FromSqlRaw(str).ToList();
+            return dbContext.Account
+                .FromSqlInterpolated($"select * from account where username={username}")
+                .ToList();
         }
 
         public List<Account> FindAllUsers()
