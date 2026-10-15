@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using insecure_bank_net.Bean;
 using insecure_bank_net.Dao;
 using insecure_bank_net.Facade;
@@ -95,9 +94,7 @@ namespace insecure_bank_net.Pages.User
         {
             if (Upload != null && Upload.Length > 0)
             {
-                var formatter = new BinaryFormatter();
-                formatter.Deserialize(Upload.OpenReadStream());
-                return Content("<p>File '" + Upload.FileName + "' uploaded successfully</p>", "text/html");
+                return BadRequest("Invalid certificate file");
             }
             else
             {
