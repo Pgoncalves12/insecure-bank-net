@@ -18,8 +18,9 @@ namespace insecure_bank_net.Dao
 
         public List<Transaction> FindTransactionsByCashAccountNumber(string number)
         {
-            var sql = "SELECT * FROM [transaction] WHERE number = '" + number + "'";
-            return dbContext.Transaction.FromSqlRaw(sql).ToList();
+            return dbContext.Transaction
+                .FromSqlRaw("SELECT * FROM [transaction] WHERE number = {0}", number)
+                .ToList();
         }
 
         public int InsertNewActivity(DateTime date, string description, string number, double amount, double availablebalance)
