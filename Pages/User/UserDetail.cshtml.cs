@@ -56,7 +56,13 @@ namespace insecure_bank_net.Pages.User
 
         public IActionResult OnGetCreditCardImage(string name)
         {
-            var stream = new FileStream(environment.WebRootPath + $"{SP}img{SP}creditCards{SP}{name}", FileMode.Open);
+            if (string.IsNullOrWhiteSpace(name) || Path.GetFileName(name) != name)
+            {
+                return BadRequest();
+            }
+
+            var path = Path.Combine(environment.WebRootPath, "img", "creditCards", name);
+            var stream = new FileStream(path, FileMode.Open);
             return File(stream, "image/png", name);
         }
 
